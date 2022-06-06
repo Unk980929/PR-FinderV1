@@ -153,6 +153,19 @@ def filtrar_text(update, context):
                     except Exception as ex:print(str(ex))
                     return
             except: bot.sendMessage(update.message.chat.id,"ERROR")
+        
+        if '/crypt' in msgText:
+            proxy_sms = str(msgText).split(' ')[1]
+            proxy = S5Crypto.encrypt(f'{proxy_sms}')
+            bot.sendMessage(update.message.chat.id, f'Proxy encryptado:\n{proxy}')
+            return
+
+        if '/decrypt' in msgText:
+            proxy_sms = str(msgText).split(' ')[1]
+            proxy_de = S5Crypto.decrypt(f'{proxy_sms}')
+            bot.sendMessage(update.message.chat.id, f'Proxy decryptado:\n{proxy_de}')
+            return
+
         if '/add_user' in text:
             isadmin = jdb.is_admin(username)
             if isadmin:
@@ -167,6 +180,7 @@ def filtrar_text(update, context):
             else:
                 bot.sendMessage(update.message.chat.id,'✖️No Tiene Permiso✖️')
             return
+
         if '/kick_user' in text:
             isadmin = jdb.is_admin(username)
             if isadmin:
